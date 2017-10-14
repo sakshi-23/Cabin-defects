@@ -1,0 +1,70 @@
+[
+  {
+    "type" : 1,
+    "name" : "Flight infotainment",
+    "description": "The infotainment system is not working"
+  },
+  {
+   "type" : 2,
+    "name" : "Seat belt",
+    "description": "Problem with the seat belt"
+  },
+  {
+    "type" : 3,
+    "name" : "Seat Issue",
+    "description": "Problem with the seat"
+  },
+   {
+    "type" : 4,
+    "name" : "Foot rest",
+    "description": "Issue with the foot support"
+  },
+  {
+     "type" : 5,
+    "name" : "Broken Tray",
+    "description": "The tray is broken"
+  },
+  {
+     "type" : 6,
+    "name" : "Overhead light",
+    "description": "The overhead light is not working"
+  },
+  {
+     "type" : 7,
+    "name" : "Armrest",
+    "description": "Problem with the armrest"
+  },
+  {
+     "type" : 8,
+    "name" : "Air Conditioner",
+    "description": "Problem with the Air Conditioner"
+  },
+  {
+     "type" : 9,
+    "name" : "Overhead bin",
+    "description": "Issue with the overhead bin"
+  },
+  {
+     "type" : 10,
+    "name" : "Window blinds",
+    "description": "The window blinds are not shutting"
+  },
+  {
+     "type" : 11,
+    "name" : "Bathroom clogged",
+    "description": "Brathroom clogged"
+  },
+
+  {
+     "type" : 12,
+    "name" : "Bathroom seat",
+    "description": "Brathroom seat broken"
+  }
+  ]
+
+
+
+
+
+
+
