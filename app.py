@@ -11,7 +11,8 @@ import datetime
 
 
 technicians = ['Diana Prince','Tony Stark', 'Clark Kent', 'Bruce Wayne', 'Peter Parker', 'Wonder Women', 'Natasha Romanoff']
-
+with open('defects.json') as f:
+    defects_source = json.load(f)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 db_name = 'heroku_0t309l33'
@@ -49,16 +50,21 @@ def dashboard():
 @app.route('/create_defect', methods=['POST'])
 def create_defect():
     defect_data = request.get_json(silent=True)
+    if not defect_data.has_key('time_to_fix'):
+        defect_data['time_to_fix'] = defects_source[int(defect_data['defect_type'])-1]['time_to_fix']
     defect_record_id = str(defects.insert_one(defect_data).inserted_id)
     return json.dumps({"defect_record_id" : defect_record_id})
 
 
 @app.route('/defects/<city_code>')
 def get_defects(city_code):
-    defect_list = defects.find({'$and':[{'city_code': city_code}, {'$or' : [{'status' : 'created'}, {'status' : 'deferred'}]}]})
+    defect_list = defects.find({'$and':[{'city_code': city_code},
+                                        {'$or' : [{'status' : 'created'}, {'status' : 'deferred'}]}]}).sort('timestamp', pymongo.DESCENDING)
     defect_res = []
     for defect in defect_list:
         defect['defect_record_id'] = str(defect['_id'])
+        if not defect.has_key('time_to_fix'):
+            defect['time_to_fix'] = defects_source[int(defect['defect_type']) - 1]['time_to_fix']
         del(defect['_id'])
         defect_res.append(defect)
     return json.dumps(defect_res)
@@ -66,21 +72,25 @@ def get_defects(city_code):
 
 @app.route('/new_defects/<city_code>')
 def get_new_defects(city_code):
-    defect_list = defects.find({'$and':[{'city_code': city_code}, {'status' : 'created'}]})
+    defect_list = defects.find({'$and':[{'city_code': city_code}, {'status' : 'created'}]}).sort('timestamp', pymongo.DESCENDING)
     defect_res = []
     for defect in defect_list:
         defect['defect_record_id'] = str(defect['_id'])
         del(defect['_id'])
+        if not defect.has_key('time_to_fix'):
+            defect['time_to_fix'] = defects_source[int(defect['defect_type']) - 1]['time_to_fix']
         defect_res.append(defect)
     return json.dumps(defect_res)
 
 @app.route('/deferred_defects/<city_code>')
 def get_deferred_defects(city_code):
-    defect_list = defects.find({'$and':[{'city_code': city_code}, {'status' : 'deferred'}]})
+    defect_list = defects.find({'$and':[{'city_code': city_code}, {'status' : 'deferred'}]}).sort('timestamp', pymongo.DESCENDING)
     defect_res = []
     for defect in defect_list:
         defect['defect_record_id'] = str(defect['_id'])
         del(defect['_id'])
+        if not defect.has_key('time_to_fix'):
+            defect['time_to_fix'] = defects_source[int(defect['defect_type']) - 1]['time_to_fix']
         defect_res.append(defect)
     return json.dumps(defect_res)
 
@@ -91,6 +101,8 @@ def get_all_defects(city_code):
     for defect in defect_list:
         defect['defect_record_id'] = str(defect['_id'])
         del(defect['_id'])
+        if not defect.has_key('time_to_fix'):
+            defect['time_to_fix'] = defects_source[int(defect['defect_type']) - 1]['time_to_fix']
         defect_res.append(defect)
     return json.dumps(defect_res)
 
