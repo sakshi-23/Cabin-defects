@@ -89,6 +89,12 @@ def get_all_defects(city_code):
     return json.dumps(defect_res)
 
 
+@app.route(('/mark_defect_fixed/<defect_id>'))
+def mark_fixed(defect_id):
+    defects.find_one_and_update({'_id' : ObjectId(defect_id)}, {'$set': {'status' : 'fixed'}})
+    return 'OK'
+
+
 def generate_defects():
     defect_all = []
     destination_list = get_array(destinations.find({}))
