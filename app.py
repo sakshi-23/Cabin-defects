@@ -46,9 +46,41 @@ def create_defect():
     defect_record_id = str(defects.insert_one(defect_data).inserted_id)
     return json.dumps({"defect_record_id" : defect_record_id})
 
+
 @app.route('/defects/<city_code>')
 def get_defects(city_code):
-    defect_list = defects.find({'$and':[{'city_code': city_code},{ '$or':[{'status' : 'created'}, {'status' : 'deferred'}]}]})
+    defect_list = defects.find({'$and':[{'city_code': city_code}, {'$or' : [{'status' : 'created'}, {'status' : 'deferred'}]}]})
+    defect_res = []
+    for defect in defect_list:
+        defect['defect_record_id'] = str(defect['_id'])
+        del(defect['_id'])
+        defect_res.append(defect)
+    return json.dumps(defect_res)
+
+
+@app.route('/new_defects/<city_code>')
+def get_new_defects(city_code):
+    defect_list = defects.find({'$and':[{'city_code': city_code}, {'status' : 'created'}]})
+    defect_res = []
+    for defect in defect_list:
+        defect['defect_record_id'] = str(defect['_id'])
+        del(defect['_id'])
+        defect_res.append(defect)
+    return json.dumps(defect_res)
+
+@app.route('/deferred_defects/<city_code>')
+def get_deferred_defects(city_code):
+    defect_list = defects.find({'$and':[{'city_code': city_code}, {'status' : 'deferred'}]})
+    defect_res = []
+    for defect in defect_list:
+        defect['defect_record_id'] = str(defect['_id'])
+        del(defect['_id'])
+        defect_res.append(defect)
+    return json.dumps(defect_res)
+
+@app.route('/all_defects/<city_code>')
+def get_all_defects(city_code):
+    defect_list = defects.find({'city_code': city_code})
     defect_res = []
     for defect in defect_list:
         defect['defect_record_id'] = str(defect['_id'])
