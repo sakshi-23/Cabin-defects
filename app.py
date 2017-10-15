@@ -50,13 +50,9 @@ port = int(os.getenv('PORT', 8000))
 def home():
     return render_template('index.html')
 
-@app.route('/profile')
-def profile():
-    return render_template('profile.html')
-
-@app.route('/shopping')
-def shopping():
-    return render_template('shopping.html')
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route('/register', methods=['POST'])
 def create_user():
