@@ -48,7 +48,7 @@ def create_defect():
 
 @app.route('/defects/<city_code>')
 def get_defects(city_code):
-    defect_list = defects.find({'city_code': city_code})
+    defect_list = defects.find({'$and':[{'city_code': city_code},{ '$or':[{'status' : 'created'}, {'status' : 'deferred'}]}]})
     defect_res = []
     for defect in defect_list:
         defect['defect_record_id'] = str(defect['_id'])
@@ -58,39 +58,68 @@ def get_defects(city_code):
 
 
 def generate_defects():
-    destination_list = destinations.find({})
-    aircraft_list = aircrafts.find({})
+    defect_all = []
+    destination_list = get_array(destinations.find({}))
+    aircraft_list = get_array(aircrafts.find({}))
     seats = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+    priority = ['low','medium','high']
     durration_map = {}
+    journey_id_map  = {}
     with open('defects.json') as f:
-        defects = json.load(f)
+        defects_source = json.load(f)
     start_date = datetime.datetime.now() + datetime.timedelta(-31)
-    for i in range(1,30):
-        date = start_date+datetime.timedelta(i)
-        for j in range(1,150):
-            s_ran = randint(1, len(destination_list))
-            d_ran = randint(1, len(destination_list))
+    count = 0
+    for i in range(0,30):
+        date = start_date+datetime.timedelta(days=i)
+
+        for j in range(0,150):
+            s_ran = randint(1, len(destination_list)-1)
+            d_ran = randint(1, len(destination_list)-1)
             while  d_ran== s_ran:
-                d_ran = randint(1, len(destination_list))
+                d_ran = randint(1, len(destination_list)-1)
             source = destination_list[s_ran]['Code']
             dest = destination_list[d_ran]['Code']
             starttime = date + datetime.timedelta(hours=randint(1,12),minutes=randint(1,60))
+            aircraft = aircraft_list[randint(1, len(aircraft_list)-1)]
+            journey_id = randint(10001, 99999 )
+            while journey_id_map.has_key(journey_id) :
+                journey_id = randint(10001, 99999 )
+            journey_id_map[journey_id] = ""
             if durration_map.has_key(source+dest) :
                 duration = durration_map[source+dest]
             else:
                 duration = randint(3, 15)
                 durration_map[source+dest] = duration
-            for k in range(1,5):
-                index = randint(1,12)
-                defect = defects[index]
+            endtime = starttime+datetime.timedelta(hours=duration)
+            for k in range(0,5):
+                index = randint(0,11)
+                defect = defects_source[index]
+                defect['journey_id'] = journey_id
                 defect['source'] = source
-                defect['destination'] = dest
-                defect['timestamp'] = starttime + datetime.timedelta(hours=randint(1,duration),minutes=randint(1,60))
-                if defect['type'] < 9:
-                    defect['seat_no'] = str(randint(1,50))+seats[randint(1,9)]
+                defect['dest'] = dest
+                defect["city_code"] = dest
+                defect["status"] =  "fixed"
+                defect["aircraft_id"] = aircraft["aircraft_registration_id"]
+                defect["aircraft"] =  aircraft["aircraft_type"]
+                defect["flight_start_time"] =  str(starttime)
+                defect["flight_end_time"] = str(endtime)
+                defect["priority"] = priority[randint(0,2)]
+                defect['timestamp'] = str(starttime + datetime.timedelta(hours=randint(1,duration),minutes=randint(1,60)))
+                if defect['defect_type'] < 9:
+                    defect['seat_no'] = str(randint(1,50))+seats[randint(0,8)]
+                if defect.has_key('_id'):
+                    del(defect['_id'])
+                defect_all.append(defect)
+                count = count +1
+                print count
+    with open('data.json', 'w') as outfile:
+        json.dump(defect_all, outfile)
 
-
-
+def get_array(cursor):
+    list = []
+    for i in cursor:
+        list.append(i)
+    return list
 
 
 def random_date(start,l):
