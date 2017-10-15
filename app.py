@@ -111,7 +111,7 @@ def generate_defects():
                     del(defect['_id'])
                 defect_all.append(defect)
                 count = count +1
-                print count
+                # print count
     with open('data.json', 'w') as outfile:
         json.dump(defect_all, outfile)
 
