@@ -10,7 +10,7 @@ from random import randint
 import datetime
 
 
-
+technicians = ['Diana Prince','Tony Stark', 'Clark Kent', 'Bruce Wayne', 'Peter Parker', 'Wonder Women', 'Natasha Romanoff']
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -91,7 +91,11 @@ def get_all_defects(city_code):
 
 @app.route(('/mark_defect_fixed/<defect_id>'))
 def mark_fixed(defect_id):
-    defects.find_one_and_update({'_id' : ObjectId(defect_id)}, {'$set': {'status' : 'fixed'}})
+    defects.find_one_and_update({'_id' : ObjectId(defect_id)}, {'$set':
+                                                                    {'status' : 'fixed',
+                                                                     'completed_timestamp':str(datetime.datetime.now()),
+                                                                     'completed_person' : technicians[randint(0,6)]
+                                                                     }})
     return 'OK'
 
 @app.route(('/mark_defect_deferred/<defect_id>'))
@@ -117,6 +121,7 @@ def generate_defects():
     destination_list = get_array(destinations.find({}))
     aircraft_list = get_array(aircrafts.find({}))
     seats = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+
     priority = ['low','medium','high']
     durration_map = {}
     journey_id_map  = {}
@@ -160,6 +165,8 @@ def generate_defects():
                 defect["flight_end_time"] = str(endtime)
                 defect["priority"] = priority[randint(0,2)]
                 defect['timestamp'] = str(starttime + datetime.timedelta(hours=randint(1,duration),minutes=randint(1,60)))
+                defect['completed_timestamp'] = str(endtime+datetime.timedelta(hours=randint(1,4), minutes=randint(1,60)))
+                defect['completed_person_name'] = technicians[randint(0,6)]
                 if defect['defect_type'] < 9:
                     defect['seat_no'] = str(randint(1,50))+seats[randint(0,8)]
                 if defect.has_key('_id'):
