@@ -107,8 +107,8 @@ def mark_fixed(defect_id):
 @app.route(('/mark_defect_deferred/<defect_id>'))
 def mark_deferred(defect_id):
     defects.find_one_and_update({'_id' : ObjectId(defect_id)}, {'$set': {'status' : 'deferred',
-                                                                         'deferred_timestamp' : str(datetime.datetime.now()),
-                                                                         'deferred_person_name' : technicians[1]
+                                                                         'deferred_timestamp': str(datetime.datetime.now()),
+                                                                         'deferred_person_name': technicians[1]
                                                                          }})
     return 'OK'
 
