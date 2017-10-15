@@ -94,6 +94,23 @@ def mark_fixed(defect_id):
     defects.find_one_and_update({'_id' : ObjectId(defect_id)}, {'$set': {'status' : 'fixed'}})
     return 'OK'
 
+@app.route(('/mark_defect_deferred/<defect_id>'))
+def mark_deferred(defect_id):
+    defects.find_one_and_update({'_id' : ObjectId(defect_id)}, {'$set': {'status' : 'deferred'}})
+    return 'OK'
+
+
+@app.route('/analytics', methods=['POST'])
+def analytics():
+    query_json = request.get_json(silent=True)
+    defect_list =[]
+    results = defects.find(query_json)
+    for r in results:
+        r['defect_record_id'] = str(r['_id'])
+        del(r['_id'])
+        defect_list.append(r)
+    return json.dumps(defect_list)
+
 
 def generate_defects():
     defect_all = []
