@@ -46,9 +46,13 @@ notifications = db[notification_collection]
 
 port = int(os.getenv('PORT', 8000))
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+@app.route('/entry')
+def entry():
+    return render_template('entry.html')
+
+@app.route('/logs')
+def logs():
+    return render_template('logs.html')
 
 @app.route('/dashboard')
 def dashboard():

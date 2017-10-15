@@ -941,7 +941,7 @@ h2.title {
 }
 
 .main-panel>.content {
-    margin-top: 70px;
+    margin-top: 50px;
     padding: 30px 15px;
     min-height: calc(100% - 123px);
 }
@@ -2985,8 +2985,8 @@ label.control-label {
 }
 
 .form-group {
-    padding-bottom: 10px;
-    margin: 27px 0 0 0;
+    margin-bottom: 0px;
+
 }
 
 .form-group .form-control::-moz-placeholder {
