@@ -65,6 +65,8 @@ $(document).ready( function() {
 //         $(".dropdown-menu").html("")
      });
     $(".pending").on("swiperight","tr",function(e){
+         $("#fivenot").html("");
+         $("#fivenot").addClass("hidden");
 
         $(this).css({"-webkit-transform":"translate("+e.swipestop.coords[0]+"px,0)"})
 
@@ -79,7 +81,10 @@ $(document).ready( function() {
 
       });
 
-          $("body").on("swipeleft","tr",function(e){
+          $(".pending").on("swipeleft","tr",function(e){
+
+             $("#fivenot").html("");
+         $("#fivenot").addClass("hidden");
 
             $(this).css({"-webkit-transform":"translate(-"+e.swipestop.coords[0]+"px,0)"})
              dataid= $(this).attr("defect_record_id")
@@ -93,18 +98,18 @@ $(document).ready( function() {
 
       });
 
-
+     $(".loader").removeClass("hidden");
     function getLogs(){
-        $(".loader").removeClass("hidden");
-         $.get("https://sia-cabin-defects.herokuapp.com/all_defects/SFO", function(data, status){
+//
+         $.get("/all_defects/SFO", function(data, status){
            var pending="",completed="",deferred="";
            data= JSON.parse(data);
            pending_new=[]
             $(".loader").addClass("hidden");
-            $(".dropdown-menu").html("");
+//            $(".dropdown-menu").html("");
            for (var i in data){
                 var val=data[i];
-                val.name=val.completed_person?val.completed_person:"John Thompson"
+                val.name=val.completed_person_name?val.completed_person_name:"John Thompson"
 
                 if(data[i].status=="deferred"){
                     deferred+='<tr defect_record_id='+val.defect_record_id+'><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.name+'</td><td>'+val.flight_end_time.substring(0,16)+'</td><td><button class="btn btn-sm btn-default">Deferred<i class="material-icons">play_arrow</i></button></td></tr>'
@@ -142,7 +147,7 @@ $(document).ready( function() {
 
 
    setInterval(
-    getLogs(),2000
+    getLogs,5000
    )
 
 

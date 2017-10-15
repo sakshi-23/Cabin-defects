@@ -151,3 +151,17 @@ input:checked + .slider:before {
   cursor: w-resize;
   z-index: 10;
 }
+
+.card .card-content{
+    padding-top:75px;
+}
+
+.btn-error{
+background:#8BC34A;
+}
+
+.form-group.label-floating label.control-label.selected, .form-group.label-placeholder label.control-label.selected{
+top: -28px;
+    font-size: 12px;
+    line-height: 1.42857;
+}

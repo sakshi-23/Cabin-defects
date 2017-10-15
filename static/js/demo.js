@@ -310,13 +310,13 @@ $(document).ready( function() {
         $("#showDashboardResults").addClass("hidden");
         $("#showDefects").removeClass("hidden");
         $(".loader").removeClass("hidden");
-         $.get("https://sia-cabin-defects.herokuapp.com/all_defects/SFO", function(data, status){
+         $.get("/all_defects/SFO", function(data, status){
            var pending="",completed="",deferred="";
            data= JSON.parse(data);
             $(".loader").addClass("hidden");
            for (var i in data){
                 var val=data[i];
-                val.name=val.completed_person
+                val.name=val.completed_person_name
                 if(data[i].status=="deferred"){
                     deferred+='<tr><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.name+'</td><td><button class="btn btn-sm btn-default">Action<i class="material-icons">play_arrow</i></button></td></tr>'
 
