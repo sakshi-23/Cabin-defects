@@ -165,3 +165,9 @@ top: -28px;
     font-size: 12px;
     line-height: 1.42857;
 }
+
+@media (max-width: 992px) {
+.control-label{
+
+display:none;
+}

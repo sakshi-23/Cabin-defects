@@ -80,8 +80,7 @@
 
                         <div class="card">
                             <div class="card-header" data-background-color="purple">
-                                    <div data-id="reported" class="col-lg-6 col-sm-6 card-header-divs active ">  Create new Defect </div>
-                                     <div data-id="past" class="col-lg-6 col-sm-6 card-header-divs ">  Reported Defects </div>
+                                    <div data-id="reported" class="col-lg-12 col-sm-12 card-header-divs active ">  Create new Defect </div>
 
                                 </div>
                         <div class="card-content reported" id="">
@@ -96,7 +95,7 @@
                                             <div class="col-md-2">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Flight ID</label>
-                                                    <input type="text" class="form-control" value="100098">
+                                                    <input id="aircraftId" type="text" class="form-control" value="100098">
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
@@ -109,14 +108,14 @@
                                             <div class="col-md-2">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">From</label>
-                                                    <input type="text" class="form-control" value="NGO">
+                                                    <input id="from" type="text" class="form-control" value="NGO">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">To</label>
-                                                    <input type="text" class="form-control" value="SFO">
+                                                    <input id="to" type="text" class="form-control" value="SFO">
                                                 </div>
                                             </div>
                                         </div>
@@ -143,7 +142,7 @@
                                                         <option >--- ADD NEW ---</option>
                                                     </select>
 
-                                                     <input type="text" class="form-control hidden sub-issue others">
+                                                     <input  placeholder="Sub Issue" type="text" class="form-control hidden sub-issue others">
 
                                                 </div>
                                             </div>
@@ -158,8 +157,8 @@
                                             <div class="col-md-3">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Priority</label>
-                                                    <select type="text" class="form-control">
-                                                        <option >Standard</option>
+                                                    <select type="text" class="form-control priority">
+                                                        <option selected>Standard</option>
                                                         <option >High</option>
                                                         <option >Low</option>
                                                         <option >Normal</option>
@@ -178,13 +177,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" style="background:#0d6ec0" class="btn submit pull-right">Submit</button>
+                                        <button  style="background:#0d6ec0" class="btn submit pull-right">Submit</button>
                                         </div>
                                         <div class="clearfix"></div>
                                     </form>
 
                     </div>
-                           <div class="card-content past table-responsive hidden">
+                            <div class="card-header" data-background-color="purple" style="    margin-top: 50px;">
+                                    <div data-id="past" class="col-lg-12 col-sm-12 card-header-divs active">  Reported Defects </div>
+
+                                </div>
+
+                            <div class="card-content past table-responsive ">
                                     <table class="table table-hover">
                                         <thead class="text-warning">
                                            <th>TimeStamp</th>

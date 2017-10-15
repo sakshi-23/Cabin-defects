@@ -116,7 +116,7 @@ $(document).ready( function() {
 
                 }
                 else if (data[i].status=="created"){
-                    pending+='<tr defect_record_id='+val.defect_record_id+'><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.source+'</td><td>'+val.flight_end_time.substring(0,16)+'</td><td><button class="btn btn-sm btn-default">Details<i class="material-icons">play_arrow</i></button></td></tr>'
+                    pending+='<tr defect_record_id='+val.defect_record_id+'><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.source+'</td><td>'+val.flight_end_time.substring(0,16)+'</td><td>'+val.time_to_fix+'</td><td><button class="btn btn-sm btn-default">Details<i class="material-icons">play_arrow</i></button></td><td><input type="text" placeholder="Commment"></td></tr>'
                     pending_new.push("Aircraft #"+val.aircraft_id+" reported "+val.description)
                 }
                 else{

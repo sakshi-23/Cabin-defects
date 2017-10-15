@@ -48,14 +48,14 @@ demo = {
 
 $(document).ready( function() {
 
-
-    $(".card-header-divs").on("click",function(){
-        $(".card-header-divs").removeClass("active");
-         $(this).addClass("active");
-        $(".card-content ").addClass("hidden");
-       $("."+ $(this).attr("data-id")).removeClass("hidden");
-
-    })
+//
+//    $(".card-header-divs").on("click",function(){
+//        $(".card-header-divs").removeClass("active");
+//         $(this).addClass("active");
+//        $(".card-content ").addClass("hidden");
+//       $("."+ $(this).attr("data-id")).removeClass("hidden");
+//
+//    })
 
 
 
@@ -124,20 +124,20 @@ $(".issue-select").on("change",function(){
     if(  ['8','11','12'].indexOf($(this).val())==-1)
         $(".issue").removeClass("hidden");
     $(".sub-issue").addClass("hidden");
-    if ($(this).val()==2)
+    if ($(this).val()=="Seat belt")
         $(".seatbelt").removeClass("hidden").addClass("selected-sub");
     else
         $(".others").removeClass("hidden").addClass("selected-sub");
 })
 
 
-$(".submit").on("click",function(){
-
+$(".submit").on("click",function(e){
+    e.preventDefault();
 
 var data={
-	"city_code" : "SFO",
-	"source" : "NGO",
-	"dest" : "SFO",
+	"city_code" : $("#to").val(),
+	"source" : $("#from").val(),
+	"dest" : $("#to").val(),
 	"defect_type" : 2,
 	"seat_no" : "10F",
 	"timestamp" : new Date(),
@@ -148,7 +148,7 @@ var data={
 	"aircraft" : "Boeing 777-300ER",
 	"flight_start_time" : "2017-10-15 14:20:05.226899",
 	"flight_end_time" : "2017-10-15 20:20:05.226899",
-	"priority": "Normal"
+	"priority": $(".priority").val()
 }
 
         $.ajax({
