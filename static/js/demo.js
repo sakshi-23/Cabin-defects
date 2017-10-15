@@ -316,7 +316,7 @@ $(document).ready( function() {
             $(".loader").addClass("hidden");
            for (var i in data){
                 var val=data[i];
-                val.name=val.completed_person_name
+                val.name=val.completed_person
                 if(data[i].status=="deferred"){
                     deferred+='<tr><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.name+'</td><td><button class="btn btn-sm btn-default">Action<i class="material-icons">play_arrow</i></button></td></tr>'
 

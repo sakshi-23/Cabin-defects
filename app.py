@@ -86,7 +86,7 @@ def get_deferred_defects(city_code):
 
 @app.route('/all_defects/<city_code>')
 def get_all_defects(city_code):
-    defect_list = defects.find({'city_code': city_code})
+    defect_list = defects.find({'city_code': city_code}).sort('timestamp', pymongo.DESCENDING)
     defect_res = []
     for defect in defect_list:
         defect['defect_record_id'] = str(defect['_id'])
