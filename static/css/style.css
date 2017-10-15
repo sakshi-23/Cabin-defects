@@ -83,3 +83,33 @@ input:checked + .slider:before {
 
 /* Hide default HTML checkbox */
 .switch input {display:none;}
+
+
+.ct-series-b .ct-point, .ct-series-b .ct-line, .ct-series-b .ct-bar, .ct-series-b .ct-slice-donut{
+
+    stroke-dasharray: 5;
+}
+
+.title span{
+   transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+}
+
+.small.predictions{
+    font-size: 10px;
+
+        transition: all 0.33s linear;
+}
+
+.visuallyhidden{
+
+
+        opacity: 0;
+
+}
+
+
+
+.small, .small i{
+    font-size: 16px;
+}
+

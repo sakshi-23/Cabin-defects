@@ -22,7 +22,7 @@ demo = {
         dataDailySalesChart = {
             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
             series: [
-                [12, 17, 7, 17, 23, 18, 38]
+                [12, 17, 7, 17, 23, 18, 38], [1, 10, 7, 17, 23, 18, 38]
             ]
         };
 
@@ -81,7 +81,7 @@ demo = {
         dataCompletedTasksChart = {
             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
             series: [
-                [30, 10, 40, 30, 20,10,  5]
+                [30, 10, 40, 30, 20,10,  5],
             ]
         };
 
@@ -144,120 +144,117 @@ demo = {
 
     },
 
-    initGoogleMaps: function() {
-        var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
-        var mapOptions = {
-            zoom: 13,
-            center: myLatlng,
-            scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
-            styles: [{
-                "featureType": "water",
-                "stylers": [{
-                    "saturation": 43
-                }, {
-                    "lightness": -11
-                }, {
-                    "hue": "#0088ff"
-                }]
-            }, {
-                "featureType": "road",
-                "elementType": "geometry.fill",
-                "stylers": [{
-                    "hue": "#ff0000"
-                }, {
-                    "saturation": -100
-                }, {
-                    "lightness": 99
-                }]
-            }, {
-                "featureType": "road",
-                "elementType": "geometry.stroke",
-                "stylers": [{
-                    "color": "#808080"
-                }, {
-                    "lightness": 54
-                }]
-            }, {
-                "featureType": "landscape.man_made",
-                "elementType": "geometry.fill",
-                "stylers": [{
-                    "color": "#ece2d9"
-                }]
-            }, {
-                "featureType": "poi.park",
-                "elementType": "geometry.fill",
-                "stylers": [{
-                    "color": "#ccdca1"
-                }]
-            }, {
-                "featureType": "road",
-                "elementType": "labels.text.fill",
-                "stylers": [{
-                    "color": "#767676"
-                }]
-            }, {
-                "featureType": "road",
-                "elementType": "labels.text.stroke",
-                "stylers": [{
-                    "color": "#ffffff"
-                }]
-            }, {
-                "featureType": "poi",
-                "stylers": [{
-                    "visibility": "off"
-                }]
-            }, {
-                "featureType": "landscape.natural",
-                "elementType": "geometry.fill",
-                "stylers": [{
-                    "visibility": "on"
-                }, {
-                    "color": "#b8cb93"
-                }]
-            }, {
-                "featureType": "poi.park",
-                "stylers": [{
-                    "visibility": "on"
-                }]
-            }, {
-                "featureType": "poi.sports_complex",
-                "stylers": [{
-                    "visibility": "on"
-                }]
-            }, {
-                "featureType": "poi.medical",
-                "stylers": [{
-                    "visibility": "on"
-                }]
-            }, {
-                "featureType": "poi.business",
-                "stylers": [{
-                    "visibility": "simplified"
-                }]
-            }]
+    updateDocumentationCharts: function() {
 
+        /* ----------==========     Daily Sales Chart initialization    ==========---------- */
+
+        dataDailySalesChart = {
+            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            series: [
+                [602,  652,792, 740, 630, 719, 655], [500,  692,732, 750, 670, 619, 755]
+            ]
+        };
+
+        optionsDailySalesChart = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+            }),
+            low: 400,
+            high: 900, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0
+            },
         }
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            title: "Hello World!"
-        });
+        var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
 
-        // To add the marker to the map, call setMap();
-        marker.setMap(map);
+        md.startAnimationForLineChart(dailySalesChart);
+
+
+
+        /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
+
+        dataCompletedTasksChart = {
+            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            series: [
+                [30, 10, 40, 30, 20,10,  5], [10, 20, 30, 30, 25,8,  14],
+            ]
+        };
+
+        optionsCompletedTasksChart = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+            }),
+            low: 0,
+            high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0
+            }
+        }
+
+        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+
+        // start animation for the Completed Tasks Chart - Line Chart
+        md.startAnimationForLineChart(completedTasksChart);
+
+
+        /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
+
+        var dataEmailsSubscriptionChart = {
+            labels:['BWN', 'CPH', 'DAC', 'DUS', 'FRA', 'HKG', 'MEL', 'MUC', 'PER', 'SYD', 'WSSS'],
+            series: [
+                [542, 443, 320, 300, 553, 653, 326, 434, 568, 610,900],  [542, 413, 280, 390, 543, 693, 316, 494, 528, 510,980]
+
+            ]
+        };
+        var optionsEmailsSubscriptionChart = {
+            axisX: {
+                showGrid: false
+            },
+            low: 0,
+            high: 1000,
+            chartPadding: {
+                top: 0,
+                right: 5,
+                bottom: 0,
+                left: 0
+            }
+        };
+        var responsiveOptions = [
+            ['screen and (max-width: 640px)', {
+                seriesBarDistance: 5,
+                axisX: {
+                    labelInterpolationFnc: function(value) {
+                        return value[0];
+                    }
+                }
+            }]
+        ];
+        var emailsSubscriptionChart = Chartist.Bar('#emailsSubscriptionChart', dataEmailsSubscriptionChart, optionsEmailsSubscriptionChart, responsiveOptions);
+
+        //start animation for the Emails Subscription Chart
+        md.startAnimationForBarChart(emailsSubscriptionChart);
+
     },
 
-    showNotification: function(from, align) {
+
+
+    showNotification: function(message,from,align ) {
         color = Math.floor((Math.random() * 4) + 1);
 
         $.notify({
             icon: "notifications",
-            message: "You have a new message"
+            message: message
 
         }, {
             type: type[color],
-            timer: 4000,
+            timer: 2000,
             placement: {
                 from: from,
                 align: align
@@ -275,9 +272,35 @@ demo = {
 
 $(document).ready( function() {
 
+
+    $("#predicted").on("change",function(){
+    var box=  $(".predictions")
+         if($(this).is(':checked')) {
+        demo.updateDocumentationCharts();
+//        .removeClass("hidden");
+//         $(".predictions").toggleClass('visuallyhidden');
+        box.removeClass('hidden');
+            setTimeout(function () {
+              box.removeClass('visuallyhidden');
+            }, 20);
+        }
+        else{
+        demo.initDashboardPageCharts();
+       box.addClass('visuallyhidden');
+
+    box.one('transitionend', function(e) {
+
+      box.addClass('hidden');
+
+    });
+        }
+
+
+    })
+
     $("#searchDefects").on("change",function(){
         $("#searchDefectsValue").removeClass("hidden");
-    })
+    });
 
     $("#notificationId").on("click",function(){
         $("#fivenot").hide();
@@ -293,7 +316,7 @@ $(document).ready( function() {
             $(".loader").addClass("hidden");
            for (var i in data){
                 var val=data[i];
-                val.name="Dev Dutta";
+                val.name=val.completed_person_name
                 if(data[i].status=="deferred"){
                     deferred+='<tr><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.name+'</td><td><button class="btn btn-sm btn-default">Action<i class="material-icons">play_arrow</i></button></td></tr>'
 
@@ -304,7 +327,7 @@ $(document).ready( function() {
                 }
                 else{
 
-                    completed+='<tr><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.name+'</td><td>'+val.completedTime+'</td></tr>'
+                    completed+='<tr><td>'+val.timestamp.substring(0,16)+'</td><td>'+val.aircraft_id+'</td><td>'+val.description+'</td><td>'+val.name+'</td><td>'+val.completed_timestamp+'</td></tr>'
 
                 }
 

@@ -5669,12 +5669,12 @@ footer .btn {
 .ct-series-b .ct-line,
 .ct-series-b .ct-bar,
 .ct-series-b .ct-slice-donut {
-    stroke: #f44336;
+    stroke: #625959;
 }
 
 .ct-series-b .ct-slice-pie,
 .ct-series-b .ct-area {
-    fill: #f44336;
+    fill: #625959;
 }
 
 .ct-series-c .ct-point,
